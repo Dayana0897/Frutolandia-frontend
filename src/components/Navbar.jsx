@@ -3,11 +3,31 @@
  * Contiene el logo, menú de navegación y selector de tema
  */
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
+import { AuthModal } from './AuthModal';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 export const Navbar = () => {
+  const { user, isAdmin, logout } = useAuth();
+  const navigate = useNavigate();
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState('login');
+
+  const handleLogout = () => {
+    logout();
+    setShowUserMenu(false);
+    navigate('/');
+  };
+
+  const handleOpenAuthModal = (mode = 'login') => {
+    setAuthModalMode(mode);
+    setAuthModalOpen(true);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -34,16 +54,63 @@ export const Navbar = () => {
               Usuarios
             </Link>
           </li>
-          <li className="navbar-item">
-            <Link to="/admin" className="navbar-link">
-              Admin
-            </Link>
-          </li>
+          {isAdmin && (
+            <li className="navbar-item">
+              <Link to="/admin" className="navbar-link navbar-link-admin">
+                ⚙️ Admin
+              </Link>
+            </li>
+          )}
         </ul>
 
-        {/* Selector de tema */}
-        <ThemeToggle />
+        {/* Sección de Usuario y Tema */}
+        <div className="navbar-right">
+          {/* Selector de tema */}
+          <ThemeToggle />
+
+          {/* Autenticación */}
+          {user ? (
+            <div className="user-menu">
+              <button
+                className="user-button"
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                title={`${user.name} (${user.role})`}
+              >
+                <span className="user-avatar">{user.name.charAt(0).toUpperCase()}</span>
+                <span className="user-name">{user.name}</span>
+              </button>
+
+              {showUserMenu && (
+                <div className="user-dropdown">
+                  <div className="user-info">
+                    <p className="user-email">{user.email}</p>
+                    <p className="user-role">{user.role === 'ADMIN' ? '👑 Admin' : '👤 Usuario'}</p>
+                  </div>
+                  <button onClick={handleLogout} className="logout-btn">
+                    Cerrar Sesión
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="auth-buttons">
+              <button
+                className="btn-secondary"
+                onClick={() => handleOpenAuthModal('login')}
+              >
+                🔑 Iniciar Sesión
+              </button>
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* Modal de Autenticación */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authModalMode}
+      />
     </nav>
   );
 };

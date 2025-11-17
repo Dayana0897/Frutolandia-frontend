@@ -5,8 +5,10 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useTheme } from './hooks/useTheme';
+import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { ProtectedRoute } from './components/ProtectedRoute';
 import { HomePage } from './pages/HomePage';
 import { ProductsPage } from './pages/ProductsPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
@@ -16,7 +18,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import './theme.css';
 import './App.css';
 
-function App() {
+function AppContent() {
   const { mounted } = useTheme();
 
   // Evitar flash de contenido sin estilo
@@ -38,7 +40,16 @@ function App() {
             <Route path="/productos" element={<ProductsPage />} />
             <Route path="/producto/:id" element={<ProductDetailPage />} />
             <Route path="/usuarios" element={<UsersPage />} />
-            <Route path="/admin" element={<AdminPage />} />
+            
+            {/* Rutas protegidas - Requieren autenticación y rol ADMIN */}
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <AdminPage />
+                </ProtectedRoute>
+              }
+            />
             
             {/* Ruta 404 - Debe estar al final */}
             <Route path="*" element={<NotFoundPage />} />
@@ -49,6 +60,14 @@ function App() {
         <Footer />
       </div>
     </Router>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

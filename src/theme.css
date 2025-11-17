@@ -29,12 +29,15 @@
   
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-size-base: 1rem;
+  --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  
+  --color-white: #ffffff;
   
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -55,6 +58,8 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   
+  --transition-duration: 250ms;
+  --transition-timing: ease-in-out;
   --transition-fast: 150ms ease-in-out;
   --transition-base: 250ms ease-in-out;
   --transition-slow: 350ms ease-in-out;
@@ -86,12 +91,15 @@
   
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-size-base: 1rem;
+  --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
   --font-weight-regular: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
+  
+  --color-white: #ffffff;
   
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -112,6 +120,8 @@
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
   
+  --transition-duration: 250ms;
+  --transition-timing: ease-in-out;
   --transition-fast: 150ms ease-in-out;
   --transition-base: 250ms ease-in-out;
   --transition-slow: 350ms ease-in-out;
