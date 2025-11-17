@@ -27,6 +27,7 @@ export const getUserById = async (id) => {
 // Obtener usuario por email
 export const getUserByEmail = async (email) => {
   try {
+    // Spring Boot Backend tiene endpoint específico para obtener por email
     const response = await axiosInstance.get(`/users/email/${email}`);
     return response.data;
   } catch (error) {

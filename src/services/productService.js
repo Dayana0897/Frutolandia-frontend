@@ -27,6 +27,7 @@ export const getProductById = async (id) => {
 // Buscar productos por nombre
 export const searchProducts = async (name) => {
   try {
+    // Spring Boot Backend soporta búsqueda con parámetro name
     const response = await axiosInstance.get('/products/search', {
       params: { name },
     });
