@@ -15,16 +15,23 @@ body,
 body {
   margin: 0;
   font-family: var(--font-family);
-  background-color: var(--color-white);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 .app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 .app-main {
   flex: 1;
-  background-color: var(--color-white);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition-base), color var(--transition-base);
 }

@@ -1,0 +1,109 @@
+/* ============================================
+   THEME TOGGLE - Selector de tema
+   ============================================ */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: var(--spacing-xs);
+  cursor: pointer;
+  border-radius: var(--border-radius-pill);
+  transition: background-color var(--transition-base), transform var(--transition-fast);
+  position: relative;
+  z-index: 1;
+}
+
+.theme-toggle:hover {
+  background-color: var(--bg-hover);
+  transform: scale(1.05);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 60px;
+  height: 32px;
+  background-color: var(--border-color);
+  border-radius: var(--border-radius-pill);
+  padding: 0 var(--spacing-sm);
+  transition: background-color var(--transition-base);
+}
+
+.theme-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  opacity: 0.6;
+  transition: opacity var(--transition-base);
+  width: 20px;
+  height: 20px;
+}
+
+.theme-toggle-icon-light {
+  opacity: 0.8;
+}
+
+[data-theme="dark"] .theme-toggle-track {
+  background-color: var(--border-color);
+}
+
+[data-theme="dark"] .theme-toggle-icon-light {
+  opacity: 0.5;
+}
+
+[data-theme="dark"] .theme-toggle-icon-dark {
+  opacity: 0.9;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-color: var(--color-primary);
+  border-radius: var(--border-radius-pill);
+  transition: transform var(--transition-base);
+  box-shadow: var(--shadow-md);
+  left: 3px;
+}
+
+[data-theme="dark"] .theme-toggle-thumb {
+  transform: translateX(28px);
+}
+
+/* Versión compacta para navbar */
+.navbar .theme-toggle {
+  padding: var(--spacing-sm);
+  margin-left: auto;
+}
+
+.navbar .theme-toggle-track {
+  width: 50px;
+  height: 28px;
+  padding: 0 var(--spacing-xs);
+}
+
+.navbar .theme-toggle-icon {
+  font-size: 0.875rem;
+  width: 16px;
+  height: 16px;
+}
+
+.navbar .theme-toggle-thumb {
+  width: 20px;
+  height: 20px;
+  left: 2px;
+}
+
+[data-theme="dark"] .navbar .theme-toggle-thumb {
+  transform: translateX(22px);
+}

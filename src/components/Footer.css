@@ -1,10 +1,11 @@
 /* Estilos específicos del Footer */
 
 .footer {
-  background: linear-gradient(135deg, var(--color-secondary) 0%, #1a252f 100%);
-  color: var(--color-white);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  color: var(--text-primary);
   margin-top: var(--spacing-2xl);
   padding-top: var(--spacing-2xl);
+  transition: background-color var(--transition-base), color var(--transition-base);
 }
 
 .footer-container {
@@ -17,18 +18,18 @@
 }
 
 .footer-section {
-  color: var(--color-white);
+  color: var(--text-primary);
 }
 
 .footer-section h3 {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   margin-bottom: var(--spacing-md);
-  color: var(--color-primary-light);
+  color: var(--color-primary);
 }
 
 .footer-section p {
-  color: var(--color-gray-200);
+  color: var(--text-secondary);
   line-height: 1.8;
 }
 
@@ -45,22 +46,22 @@
 }
 
 .footer-list a {
-  color: var(--color-gray-200);
+  color: var(--text-secondary);
   text-decoration: none;
   transition: color var(--transition-base);
 }
 
 .footer-list a:hover {
-  color: var(--color-primary-light);
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
 .footer-copyright {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--border-color);
   padding: var(--spacing-lg) var(--spacing-lg);
   text-align: center;
-  color: var(--color-gray-200);
-  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--text-secondary);
+  background-color: var(--bg-tertiary);
 }
 
 .footer-copyright p {

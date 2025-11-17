@@ -5,6 +5,25 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frutolandia - Tu tienda de frutas online</title>
+    <script>
+      // Inicializar tema antes de que React se cargue para evitar flash
+      (function() {
+        try {
+          const storedTheme = localStorage.getItem('theme');
+          let theme = storedTheme;
+          
+          if (!theme) {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            theme = prefersDark ? 'dark' : 'light';
+          }
+          
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          // Fallback a tema claro si hay error
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
