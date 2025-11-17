@@ -1,9 +1,10 @@
 /**
  * Componente Navbar - Barra de navegación principal
- * Contiene el logo y menú de navegación
+ * Contiene el logo, menú de navegación y selector de tema
  */
 
 import { Link } from 'react-router-dom';
+import { ThemeToggle } from './ThemeToggle';
 import './Navbar.css';
 
 export const Navbar = () => {
@@ -39,6 +40,9 @@ export const Navbar = () => {
             </Link>
           </li>
         </ul>
+
+        {/* Selector de tema */}
+        <ThemeToggle />
       </div>
     </nav>
   );

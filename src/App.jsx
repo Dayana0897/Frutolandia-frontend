@@ -4,6 +4,7 @@
  */
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useTheme } from './hooks/useTheme';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
@@ -16,6 +17,13 @@ import './theme.css';
 import './App.css';
 
 function App() {
+  const { mounted } = useTheme();
+
+  // Evitar flash de contenido sin estilo
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <Router>
       <div className="app">

@@ -1,7 +1,8 @@
 /* Estilos específicos del ProductCard */
 
 .product-card {
-  background-color: var(--color-white);
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-md);
@@ -67,13 +68,13 @@
 .product-name {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: var(--color-dark);
+  color: var(--text-primary);
   margin-bottom: var(--spacing-sm);
   word-break: break-word;
 }
 
 .product-description {
-  color: var(--color-gray-600);
+  color: var(--text-secondary);
   font-size: var(--font-size-sm);
   margin-bottom: var(--spacing-md);
   display: -webkit-box;
