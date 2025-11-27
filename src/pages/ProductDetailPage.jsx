@@ -93,11 +93,6 @@ export const ProductDetailPage = () => {
         <div className="detail-info">
           <div className="product-header">
             <h1>{selectedProduct.name}</h1>
-            {selectedProduct.stock > 0 ? (
-              <span className="badge badge-success">En Stock</span>
-            ) : (
-              <span className="badge badge-danger">Agotado</span>
-            )}
           </div>
 
           {/* Precio */}
