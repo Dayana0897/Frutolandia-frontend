@@ -24,6 +24,13 @@ export const ProductCard = ({ product, onEdit, onDelete }) => {
     setTimeout(() => setToast(null), 2000);
   };
 
+  // Determinar si es batido (contiene leche) o zumo
+  const isSmoothie = product.ingredients?.toLowerCase().includes('leche') || 
+                     product.description?.toLowerCase().includes('leche') ||
+                     product.name?.toLowerCase().includes('batido');
+  
+  const productIcon = isSmoothie ? '🥤' : '🧃';
+
   return (
     <>
       {toast && (
@@ -36,7 +43,7 @@ export const ProductCard = ({ product, onEdit, onDelete }) => {
       <div className="product-card">
       {/* Imagen placeholder */}
       <div className="product-image">
-        <div className="image-placeholder">🍎</div>
+        <div className="image-placeholder">{productIcon}</div>
         {product.stock && product.stock > 0 && (
           <span className="badge badge-success">En stock</span>
         )}

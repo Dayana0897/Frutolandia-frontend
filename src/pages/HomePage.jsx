@@ -54,22 +54,30 @@ export const HomePage = () => {
             </div>
           ) : (
             <div className="featured-grid">
-              {featuredProducts.map((product) => (
-                <div key={product.id} className="featured-card">
-                  <div className="featured-image">🍎</div>
-                  <h3>{product.name}</h3>
-                  <p className="price">€{product.price?.toFixed(2) || '0.00'}</p>
-                  <p className="description">{product.description}</p>
-                  <Link
-                    to={`/producto/${product.id}`}
-                    className="btn btn-primary btn-sm"
-                  >
-                    Ver Detalles
-                  </Link>
-                </div>
-              ))}
+              {featuredProducts.map((product) => {
+                // Determinar si es batido (contiene leche) o zumo
+                const isSmoothie = product.ingredients?.toLowerCase().includes('leche') || 
+                                   product.description?.toLowerCase().includes('leche') ||
+                                   product.name?.toLowerCase().includes('batido');
+                const productIcon = isSmoothie ? '🥤' : '🧃';
+                
+                return (
+                  <div key={product.id} className="featured-card">
+                    <div className="featured-image">{productIcon}</div>
+                    <h3>{product.name}</h3>
+                    <p className="price">€{product.price?.toFixed(2) || '0.00'}</p>
+                    <p className="description">{product.description}</p>
+                    <Link
+                      to={`/producto/${product.id}`}
+                      className="btn btn-primary btn-sm"
+                    >
+                      Ver Detalles
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
-          )}
+          )}}
         </div>
       </section>
 

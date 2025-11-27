@@ -69,6 +69,7 @@ const LoginForm = ({ onSuccess, inModal = false }) => {
           placeholder="tu@email.com"
           className={errors.email ? 'input-error' : ''}
           disabled={loading}
+          autoComplete="off"
         />
         {errors.email && <span className="field-error">{errors.email}</span>}
       </div>
@@ -78,6 +79,7 @@ const LoginForm = ({ onSuccess, inModal = false }) => {
         <div className="password-input-wrapper">
           <input
             type={showPassword ? 'text' : 'password'}
+            autoComplete="off"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

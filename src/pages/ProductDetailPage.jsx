@@ -56,6 +56,13 @@ export const ProductDetailPage = () => {
     );
   }
 
+  // Determinar si es batido (contiene leche) o zumo
+  const isSmoothie = selectedProduct.ingredients?.toLowerCase().includes('leche') || 
+                     selectedProduct.description?.toLowerCase().includes('leche') ||
+                     selectedProduct.name?.toLowerCase().includes('batido');
+  
+  const productIcon = isSmoothie ? '🥤' : '🧃';
+
   return (
     <>
       {toast && (
@@ -78,11 +85,11 @@ export const ProductDetailPage = () => {
         {/* Galería de imágenes */}
         <div className="detail-image">
           <div className="image-gallery">
-            <div className="main-image">🍎</div>
+            <div className="main-image">{productIcon}</div>
             <div className="thumbnail-gallery">
-              <div className="thumbnail">🍎</div>
-              <div className="thumbnail">🍎</div>
-              <div className="thumbnail">🍎</div>
+              <div className="thumbnail">{productIcon}</div>
+              <div className="thumbnail">{productIcon}</div>
+              <div className="thumbnail">{productIcon}</div>
             </div>
           </div>
         </div>

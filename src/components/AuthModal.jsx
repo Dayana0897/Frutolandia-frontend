@@ -68,21 +68,6 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
             </>
           )}
         </div>
-
-        {/* Demo Info */}
-        {mode === 'login' && (
-          <div className="auth-demo">
-            <p className="demo-title">👤 Demo Credentials</p>
-            <div className="demo-accounts">
-              <div className="demo-account">
-                <strong>Admin:</strong> admin@frutolandia.com / admin123
-              </div>
-              <div className="demo-account">
-                <strong>User:</strong> cliente@frutolandia.com / user123
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </Modal>
   );
