@@ -4,20 +4,30 @@
  */
 
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useProductStore } from '../store/productStore';
+import { useCartStore } from '../store/cartStore';
+import { Toast } from '../components/Toast';
 import './ProductDetailPage.css';
 
 export const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { selectedProduct, loading, error, fetchProductById } = useProductStore();
+  const addItem = useCartStore(state => state.addItem);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     if (id) {
       fetchProductById(id);
     }
   }, [id, fetchProductById]);
+
+  const handleAddToCart = () => {
+    addItem(selectedProduct);
+    setToast({ type: 'success', message: `${selectedProduct.name} agregado al carrito` });
+    setTimeout(() => setToast(null), 2000);
+  };
 
   if (loading) {
     return (
@@ -46,8 +56,23 @@ export const ProductDetailPage = () => {
     );
   }
 
+  // Determinar si es batido (contiene leche) o zumo
+  const isSmoothie = selectedProduct.ingredients?.toLowerCase().includes('leche') || 
+                     selectedProduct.description?.toLowerCase().includes('leche') ||
+                     selectedProduct.name?.toLowerCase().includes('batido');
+  
+  const productIcon = isSmoothie ? '🥤' : '🧃';
+
   return (
-    <div className="product-detail">
+    <>
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+      <div className="product-detail">
       {/* Botón para volver */}
       <button
         className="btn btn-outline"
@@ -60,12 +85,7 @@ export const ProductDetailPage = () => {
         {/* Galería de imágenes */}
         <div className="detail-image">
           <div className="image-gallery">
-            <div className="main-image">🍎</div>
-            <div className="thumbnail-gallery">
-              <div className="thumbnail">🍎</div>
-              <div className="thumbnail">🍎</div>
-              <div className="thumbnail">🍎</div>
-            </div>
+            <div className="main-image">{productIcon}</div>
           </div>
         </div>
 
@@ -83,7 +103,7 @@ export const ProductDetailPage = () => {
           {/* Precio */}
           <div className="price-section">
             <span className="current-price">
-              ${selectedProduct.price?.toFixed(2) || '0.00'}
+              €{selectedProduct.price?.toFixed(2) || '0.00'}
             </span>
             <span className="unit">/unidad</span>
           </div>
@@ -112,6 +132,7 @@ export const ProductDetailPage = () => {
           <div className="actions-section">
             <button
               className="btn btn-primary btn-lg"
+              onClick={handleAddToCart}
               disabled={selectedProduct.stock === 0}
             >
               🛒 Agregar al Carrito
@@ -129,29 +150,8 @@ export const ProductDetailPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Productos relacionados */}
-      <div className="related-products">
-        <h2>Productos Relacionados</h2>
-        <div className="related-grid">
-          <div className="related-card">
-            <div className="related-image">🍊</div>
-            <h4>Naranjas</h4>
-            <p>$2.99</p>
-          </div>
-          <div className="related-card">
-            <div className="related-image">🍌</div>
-            <h4>Plátanos</h4>
-            <p>$1.99</p>
-          </div>
-          <div className="related-card">
-            <div className="related-image">🍉</div>
-            <h4>Melones</h4>
-            <p>$4.99</p>
-          </div>
-        </div>
-      </div>
     </div>
+    </>
   );
 };
 

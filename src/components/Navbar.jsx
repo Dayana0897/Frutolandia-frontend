@@ -7,7 +7,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { ThemeToggle } from './ThemeToggle';
 import { AuthModal } from './AuthModal';
+import { Cart } from './Cart';
 import { useAuth } from '../context/AuthContext';
+import { useCartStore } from '../store/cartStore';
 import './Navbar.css';
 
 export const Navbar = () => {
@@ -16,6 +18,8 @@ export const Navbar = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState('login');
+  const [cartOpen, setCartOpen] = useState(false);
+  const getTotalItems = useCartStore(state => state.getTotalItems);
 
   const handleLogout = () => {
     logout();
@@ -49,22 +53,36 @@ export const Navbar = () => {
               Productos
             </Link>
           </li>
-          <li className="navbar-item">
-            <Link to="/usuarios" className="navbar-link">
-              Usuarios
-            </Link>
-          </li>
           {isAdmin && (
-            <li className="navbar-item">
-              <Link to="/admin" className="navbar-link navbar-link-admin">
-                ⚙️ Admin
-              </Link>
-            </li>
+            <>
+              <li className="navbar-item">
+                <Link to="/usuarios" className="navbar-link">
+                  Usuarios
+                </Link>
+              </li>
+              <li className="navbar-item">
+                <Link to="/admin" className="navbar-link navbar-link-admin">
+                  ⚙️ Admin
+                </Link>
+              </li>
+            </>
           )}
         </ul>
 
         {/* Sección de Usuario y Tema */}
         <div className="navbar-right">
+          {/* Botón del Carrito */}
+          <button 
+            className="cart-button"
+            onClick={() => setCartOpen(true)}
+            title="Ver carrito"
+          >
+            🛒
+            {getTotalItems() > 0 && (
+              <span className="cart-badge">{getTotalItems()}</span>
+            )}
+          </button>
+
           {/* Selector de tema */}
           <ThemeToggle />
 
@@ -110,6 +128,12 @@ export const Navbar = () => {
         isOpen={authModalOpen}
         onClose={() => setAuthModalOpen(false)}
         initialMode={authModalMode}
+      />
+
+      {/* Carrito de Compras */}
+      <Cart
+        isOpen={cartOpen}
+        onClose={() => setCartOpen(false)}
       />
     </nav>
   );

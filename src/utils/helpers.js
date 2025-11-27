@@ -6,10 +6,10 @@
 /**
  * Formatea un número como moneda
  * @param {number} value - Valor a formatear
- * @param {string} currency - Código de moneda (ej: 'USD', 'EUR')
+ * @param {string} currency - Código de moneda (ej: 'EUR', 'USD')
  * @returns {string} Valor formateado
  */
-export const formatCurrency = (value, currency = 'USD') => {
+export const formatCurrency = (value, currency = 'EUR') => {
   return new Intl.NumberFormat('es-ES', {
     style: 'currency',
     currency: currency,

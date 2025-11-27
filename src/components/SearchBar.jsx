@@ -10,12 +10,10 @@ export const SearchBar = ({ onSearch, placeholder = 'Buscar productos...' }) => 
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleInputChange = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const value = e.target.value;
     setSearchTerm(value);
-    // Llamar onSearch en tiempo real
-    if (onSearch) {
-      onSearch(value);
-    }
   };
 
   const handleClear = () => {
@@ -27,8 +25,7 @@ export const SearchBar = ({ onSearch, placeholder = 'Buscar productos...' }) => 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Prevenir envíos vacíos
-    if (searchTerm.trim() && onSearch) {
+    if (onSearch) {
       onSearch(searchTerm.trim());
     }
   };
@@ -43,6 +40,7 @@ export const SearchBar = ({ onSearch, placeholder = 'Buscar productos...' }) => 
           value={searchTerm}
           onChange={handleInputChange}
           aria-label="Buscar"
+          autoComplete="off"
         />
         {searchTerm && (
           <button

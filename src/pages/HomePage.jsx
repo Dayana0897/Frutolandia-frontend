@@ -27,7 +27,7 @@ export const HomePage = () => {
             🍎 Bienvenido a Frutolandia 🍎
           </h1>
           <p className="banner-subtitle">
-            Tu tienda online de frutas frescas, deliciosas y de alta calidad
+            Tu tienda online de zumos y batidos de frutas naturales
           </p>
           <Link to="/productos" className="btn btn-primary btn-lg">
             Explorar Productos
@@ -40,7 +40,7 @@ export const HomePage = () => {
         <div className="container">
           <h2 className="section-title">Productos Destacados</h2>
           <p className="section-subtitle">
-            Descubre nuestras frutas más populares
+            Descubre nuestros zumos y batidos más populares
           </p>
 
           {loading ? (
@@ -54,20 +54,28 @@ export const HomePage = () => {
             </div>
           ) : (
             <div className="featured-grid">
-              {featuredProducts.map((product) => (
-                <div key={product.id} className="featured-card">
-                  <div className="featured-image">🍎</div>
-                  <h3>{product.name}</h3>
-                  <p className="price">${product.price?.toFixed(2) || '0.00'}</p>
-                  <p className="description">{product.description}</p>
-                  <Link
-                    to={`/producto/${product.id}`}
-                    className="btn btn-primary btn-sm"
-                  >
-                    Ver Detalles
-                  </Link>
-                </div>
-              ))}
+              {featuredProducts.map((product) => {
+                // Determinar si es batido (contiene leche) o zumo
+                const isSmoothie = product.ingredients?.toLowerCase().includes('leche') || 
+                                   product.description?.toLowerCase().includes('leche') ||
+                                   product.name?.toLowerCase().includes('batido');
+                const productIcon = isSmoothie ? '🥤' : '🧃';
+                
+                return (
+                  <div key={product.id} className="featured-card">
+                    <div className="featured-image">{productIcon}</div>
+                    <h3>{product.name}</h3>
+                    <p className="price">€{product.price?.toFixed(2) || '0.00'}</p>
+                    <p className="description">{product.description}</p>
+                    <Link
+                      to={`/producto/${product.id}`}
+                      className="btn btn-primary btn-sm"
+                    >
+                      Ver Detalles
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
@@ -81,7 +89,7 @@ export const HomePage = () => {
             <div className="feature-card">
               <div className="feature-icon">🚚</div>
               <h3>Entrega Rápida</h3>
-              <p>Recibe tus pedidos frescos en 24-48 horas</p>
+              <p>Recibe tus pedidos recien hechos en menos de una hora</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">✓</div>
@@ -93,11 +101,6 @@ export const HomePage = () => {
               <h3>Mejores Precios</h3>
               <p>Ofertas especiales y descuentos exclusivos</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">🛡️</div>
-              <h3>Garantía de Calidad</h3>
-              <p>100% satisfacción garantizada o tu dinero de vuelta</p>
-            </div>
           </div>
         </div>
       </section>
@@ -106,7 +109,7 @@ export const HomePage = () => {
       <section className="cta-section">
         <div className="container">
           <h2>¿Listo para comprar?</h2>
-          <p>Explora nuestro catálogo completo de frutas frescas</p>
+          <p>Explora nuestro catálogo completo de zumos y batidos</p>
           <Link to="/productos" className="btn btn-primary btn-lg">
             Ver Todos los Productos
           </Link>

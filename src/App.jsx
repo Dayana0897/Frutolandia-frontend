@@ -39,9 +39,16 @@ function AppContent() {
             <Route path="/" element={<HomePage />} />
             <Route path="/productos" element={<ProductsPage />} />
             <Route path="/producto/:id" element={<ProductDetailPage />} />
-            <Route path="/usuarios" element={<UsersPage />} />
             
             {/* Rutas protegidas - Requieren autenticación y rol ADMIN */}
+            <Route
+              path="/usuarios"
+              element={
+                <ProtectedRoute requireAdmin={true}>
+                  <UsersPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/admin"
               element={

@@ -1,6 +1,30 @@
 # Frutolandia Frontend
 
-Frontend de e-commerce de frutas frescas construido con Vite, React y Bootstrap 5.
+Frontend de e-commerce de zumos y batidos def ruta fresca construido con Vite, React y Bootstrap 5.
+
+## 🚀 Despliegue Rápido
+
+### Requisitos
+- Node.js 16+
+- npm o yarn
+
+### Comandos de Despliegue
+
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Iniciar servidor de desarrollo
+npm run dev
+
+# Otros comandos útiles
+npm run build    # Compilar para producción
+npm run preview  # Previsualizar build
+npm run lint     # Ejecutar linter
+```
+
+**Acceso**: http://localhost:5173  
+**Backend requerido**: http://localhost:8080 (debe estar corriendo)
 
 ## 🚀 Características
 

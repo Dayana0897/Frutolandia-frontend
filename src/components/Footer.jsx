@@ -14,7 +14,7 @@ export const Footer = () => {
         {/* Sección de información */}
         <div className="footer-section">
           <h3>Frutolandia</h3>
-          <p>Tu tienda online de frutas frescas y de calidad</p>
+          <p>Tu tienda online de zumos y batidos con fruta fresca y de calidad.</p>
         </div>
 
         {/* Sección de contacto */}
@@ -33,7 +33,6 @@ export const Footer = () => {
           <ul className="footer-list">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#productos">Productos</a></li>
-            <li><a href="#usuarios">Usuarios</a></li>
           </ul>
         </div>
       </div>
