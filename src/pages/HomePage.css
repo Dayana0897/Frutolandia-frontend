@@ -2,12 +2,14 @@
 
 .home-page {
   width: 100%;
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--spacing-lg);
+  width: 100%;
 }
 
 /* Banner */

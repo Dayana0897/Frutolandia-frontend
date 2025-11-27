@@ -10,6 +10,8 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -27,6 +29,8 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color var(--transition-base), color var(--transition-base);
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .app-main {
@@ -34,4 +38,6 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color var(--transition-base), color var(--transition-base);
+  width: 100%;
+  overflow-x: hidden;
 }

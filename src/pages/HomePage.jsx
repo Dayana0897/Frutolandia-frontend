@@ -77,7 +77,7 @@ export const HomePage = () => {
                 );
               })}
             </div>
-          )}}
+          )}
         </div>
       </section>
 
@@ -89,7 +89,7 @@ export const HomePage = () => {
             <div className="feature-card">
               <div className="feature-icon">🚚</div>
               <h3>Entrega Rápida</h3>
-              <p>Recibe tus pedidos frescos en 24-48 horas</p>
+              <p>Recibe tus pedidos recien hechos en menos de una hora</p>
             </div>
             <div className="feature-card">
               <div className="feature-icon">✓</div>
@@ -101,11 +101,6 @@ export const HomePage = () => {
               <h3>Mejores Precios</h3>
               <p>Ofertas especiales y descuentos exclusivos</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">🛡️</div>
-              <h3>Garantía de Calidad</h3>
-              <p>100% satisfacción garantizada o tu dinero de vuelta</p>
-            </div>
           </div>
         </div>
       </section>
@@ -114,7 +109,7 @@ export const HomePage = () => {
       <section className="cta-section">
         <div className="container">
           <h2>¿Listo para comprar?</h2>
-          <p>Explora nuestro catálogo completo de frutas frescas</p>
+          <p>Explora nuestro catálogo completo de zumos y batidos</p>
           <Link to="/productos" className="btn btn-primary btn-lg">
             Ver Todos los Productos
           </Link>

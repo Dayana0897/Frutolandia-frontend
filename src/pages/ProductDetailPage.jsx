@@ -86,11 +86,6 @@ export const ProductDetailPage = () => {
         <div className="detail-image">
           <div className="image-gallery">
             <div className="main-image">{productIcon}</div>
-            <div className="thumbnail-gallery">
-              <div className="thumbnail">{productIcon}</div>
-              <div className="thumbnail">{productIcon}</div>
-              <div className="thumbnail">{productIcon}</div>
-            </div>
           </div>
         </div>
 
@@ -152,28 +147,6 @@ export const ProductDetailPage = () => {
             <p>📦 Envío disponible a toda España</p>
             <p>🚚 Entrega en 24-48 horas</p>
             <p>✓ Garantía de frescura</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Productos relacionados */}
-      <div className="related-products">
-        <h2>Productos Relacionados</h2>
-        <div className="related-grid">
-          <div className="related-card">
-            <div className="related-image">🍊</div>
-            <h4>Naranjas</h4>
-            <p>$2.99</p>
-          </div>
-          <div className="related-card">
-            <div className="related-image">🍌</div>
-            <h4>Plátanos</h4>
-            <p>$1.99</p>
-          </div>
-          <div className="related-card">
-            <div className="related-image">🍉</div>
-            <h4>Melones</h4>
-            <p>$4.99</p>
           </div>
         </div>
       </div>

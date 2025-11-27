@@ -107,3 +107,32 @@
 [data-theme="dark"] .navbar .theme-toggle-thumb {
   transform: translateX(22px);
 }
+
+/* Responsive - móviles */
+@media (max-width: 480px) {
+  .navbar .theme-toggle {
+    padding: 0.1rem;
+  }
+
+  .navbar .theme-toggle-track {
+    width: 34px;
+    height: 18px;
+    padding: 0 0.1rem;
+  }
+
+  .navbar .theme-toggle-icon {
+    font-size: 0.55rem;
+    width: 10px;
+    height: 10px;
+  }
+
+  .navbar .theme-toggle-thumb {
+    width: 14px;
+    height: 14px;
+    left: 1.5px;
+  }
+
+  [data-theme="dark"] .navbar .theme-toggle-thumb {
+    transform: translateX(16px);
+  }
+}

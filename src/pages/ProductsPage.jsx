@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { ProductList } from '../components/ProductList';
 import { ProductForm } from '../components/ProductForm';
 import { useProductStore } from '../store/productStore';
+import { useAuth } from '../context/AuthContext';
 import { Toast } from '../components/Toast';
 import './ProductsPage.css';
 
@@ -15,6 +16,7 @@ export const ProductsPage = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [toast, setToast] = useState(null);
   const { createProduct, updateProduct, loading } = useProductStore();
+  const { isAdmin } = useAuth();
 
   const handleFormSubmit = async (formData) => {
     try {
@@ -74,8 +76,8 @@ export const ProductsPage = () => {
         )}
       </div>
 
-      {/* Botón flotante para agregar producto */}
-      {!showForm && (
+      {/* Botón flotante para agregar producto - Solo visible para administradores */}
+      {!showForm && isAdmin && (
         <button
           className="floating-btn"
           onClick={() => setShowForm(true)}
