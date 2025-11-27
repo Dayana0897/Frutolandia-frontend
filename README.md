@@ -1,6 +1,6 @@
 # Frutolandia Frontend
 
-Frontend de e-commerce de frutas frescas construido con Vite, React y Bootstrap 5.
+Frontend de e-commerce de zumos y batidos def ruta fresca construido con Vite, React y Bootstrap 5.
 
 ## 🚀 Despliegue Rápido
 
