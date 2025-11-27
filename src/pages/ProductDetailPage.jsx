@@ -83,7 +83,7 @@ export const ProductDetailPage = () => {
           {/* Precio */}
           <div className="price-section">
             <span className="current-price">
-              ${selectedProduct.price?.toFixed(2) || '0.00'}
+              €{selectedProduct.price?.toFixed(2) || '0.00'}
             </span>
             <span className="unit">/unidad</span>
           </div>

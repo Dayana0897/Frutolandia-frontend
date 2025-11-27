@@ -33,7 +33,7 @@ export const ProductCard = ({ product, onEdit, onDelete }) => {
 
         {/* Precio */}
         <div className="product-price">
-          <span className="price">${product.price?.toFixed(2) || '0.00'}</span>
+          <span className="price">€{product.price?.toFixed(2) || '0.00'}</span>
           {product.ingredients && (
             <span className="ingredients">Ingredientes: {product.ingredients}</span>
           )}

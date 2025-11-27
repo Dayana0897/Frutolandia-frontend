@@ -27,7 +27,7 @@ export const HomePage = () => {
             🍎 Bienvenido a Frutolandia 🍎
           </h1>
           <p className="banner-subtitle">
-            Tu tienda online de frutas frescas, deliciosas y de alta calidad
+            Tu tienda online de zumos y batidos de frutas naturales
           </p>
           <Link to="/productos" className="btn btn-primary btn-lg">
             Explorar Productos
@@ -40,7 +40,7 @@ export const HomePage = () => {
         <div className="container">
           <h2 className="section-title">Productos Destacados</h2>
           <p className="section-subtitle">
-            Descubre nuestras frutas más populares
+            Descubre nuestros zumos y batidos más populares
           </p>
 
           {loading ? (
@@ -58,7 +58,7 @@ export const HomePage = () => {
                 <div key={product.id} className="featured-card">
                   <div className="featured-image">🍎</div>
                   <h3>{product.name}</h3>
-                  <p className="price">${product.price?.toFixed(2) || '0.00'}</p>
+                  <p className="price">€{product.price?.toFixed(2) || '0.00'}</p>
                   <p className="description">{product.description}</p>
                   <Link
                     to={`/producto/${product.id}`}

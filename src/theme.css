@@ -18,6 +18,7 @@
   --bg-secondary: #f9fafb;
   --bg-tertiary: #f3f4f6;
   --bg-hover: #f0fdf4;
+  --bg-card: #ffffff;
   
   --text-primary: #111827;
   --text-secondary: #4b5563;
@@ -80,6 +81,7 @@
   --bg-secondary: #111827;
   --bg-tertiary: #0f172a;
   --bg-hover: #1e3a2f;
+  --bg-card: #1f2937;
   
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
