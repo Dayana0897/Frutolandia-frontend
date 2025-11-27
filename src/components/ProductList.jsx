@@ -5,6 +5,7 @@
 
 import { useEffect, useState } from 'react';
 import { useProductStore } from '../store/productStore';
+import { useAuth } from '../context/AuthContext';
 import { SearchBar } from './SearchBar';
 import { ProductCard } from './ProductCard';
 import { Toast } from './Toast';
@@ -13,6 +14,7 @@ import './ProductList.css';
 export const ProductList = ({ showActions = false }) => {
   const { products, loading, error, fetchProducts, searchProducts, deleteProduct } =
     useProductStore();
+  const { isAdmin } = useAuth();
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
@@ -79,7 +81,8 @@ export const ProductList = ({ showActions = false }) => {
             <ProductCard
               key={product.id}
               product={product}
-              onDelete={showActions ? handleDelete : null}
+              onEdit={isAdmin ? null : null}
+              onDelete={isAdmin ? handleDelete : null}
             />
           ))}
         </div>

@@ -53,8 +53,7 @@ export const ProductsPage = () => {
       )}
 
       <div className="page-header">
-        <h1>Gestión de Productos</h1>
-        <p>Administra el catálogo de frutas frescas</p>
+        <h1>Nuestros Productos</h1>
       </div>
 
       <div className="page-content">

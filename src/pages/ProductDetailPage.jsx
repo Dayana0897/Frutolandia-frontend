@@ -4,20 +4,30 @@
  */
 
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useProductStore } from '../store/productStore';
+import { useCartStore } from '../store/cartStore';
+import { Toast } from '../components/Toast';
 import './ProductDetailPage.css';
 
 export const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { selectedProduct, loading, error, fetchProductById } = useProductStore();
+  const addItem = useCartStore(state => state.addItem);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     if (id) {
       fetchProductById(id);
     }
   }, [id, fetchProductById]);
+
+  const handleAddToCart = () => {
+    addItem(selectedProduct);
+    setToast({ type: 'success', message: `${selectedProduct.name} agregado al carrito` });
+    setTimeout(() => setToast(null), 2000);
+  };
 
   if (loading) {
     return (
@@ -47,7 +57,15 @@ export const ProductDetailPage = () => {
   }
 
   return (
-    <div className="product-detail">
+    <>
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+      <div className="product-detail">
       {/* Botón para volver */}
       <button
         className="btn btn-outline"
@@ -112,6 +130,7 @@ export const ProductDetailPage = () => {
           <div className="actions-section">
             <button
               className="btn btn-primary btn-lg"
+              onClick={handleAddToCart}
               disabled={selectedProduct.stock === 0}
             >
               🛒 Agregar al Carrito
@@ -152,6 +171,7 @@ export const ProductDetailPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

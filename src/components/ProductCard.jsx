@@ -4,17 +4,36 @@
  */
 
 import { useNavigate } from 'react-router-dom';
+import { useCartStore } from '../store/cartStore';
+import { Toast } from './Toast';
+import { useState } from 'react';
 import './ProductCard.css';
 
 export const ProductCard = ({ product, onEdit, onDelete }) => {
   const navigate = useNavigate();
+  const addItem = useCartStore(state => state.addItem);
+  const [toast, setToast] = useState(null);
 
   const handleViewDetails = () => {
     navigate(`/producto/${product.id}`);
   };
 
+  const handleAddToCart = () => {
+    addItem(product);
+    setToast({ type: 'success', message: `${product.name} agregado al carrito` });
+    setTimeout(() => setToast(null), 2000);
+  };
+
   return (
-    <div className="product-card">
+    <>
+      {toast && (
+        <Toast
+          type={toast.type}
+          message={toast.message}
+          onClose={() => setToast(null)}
+        />
+      )}
+      <div className="product-card">
       {/* Imagen placeholder */}
       <div className="product-image">
         <div className="image-placeholder">🍎</div>
@@ -34,9 +53,6 @@ export const ProductCard = ({ product, onEdit, onDelete }) => {
         {/* Precio */}
         <div className="product-price">
           <span className="price">€{product.price?.toFixed(2) || '0.00'}</span>
-          {product.ingredients && (
-            <span className="ingredients">Ingredientes: {product.ingredients}</span>
-          )}
         </div>
 
         {/* Stock */}
@@ -73,13 +89,15 @@ export const ProductCard = ({ product, onEdit, onDelete }) => {
           </button>
         )}
         <button
-          className="btn btn-warning btn-sm"
-          title="Agregar al carrito (próximamente)"
+          className="btn btn-cart btn-sm"
+          onClick={handleAddToCart}
+          title="Agregar al carrito"
         >
-          🛒 Carrito
+          🛒 Agregar
         </button>
       </div>
     </div>
+    </>
   );
 };
 
