@@ -1,18 +1,90 @@
 /* Estilos específicos del ProductForm */
 
 .product-form {
-  background-color: var(--color-white);
+  background-color: var(--bg-card);
   padding: var(--spacing-xl);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-md);
   max-width: 600px;
   margin: 0 auto;
+  border: 1px solid var(--border-color);
+}
+
+/* Estilos para el grupo de formulario */
+.product-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Estilos para las etiquetas */
+.product-form .form-label {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Estilos para los inputs y textareas */
+.product-form .form-control {
+  padding: var(--spacing-md);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  transition: all var(--transition-base);
+  width: 100%;
+}
+
+.product-form .form-control::placeholder {
+  color: var(--text-tertiary);
+}
+
+.product-form .form-control:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+  background: var(--bg-primary);
+}
+
+/* Estilos para inputs con error */
+.product-form .form-control-error {
+  border-color: var(--color-danger);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.product-form .form-control-error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Mensajes de error */
+.product-form .form-error {
+  color: var(--color-danger);
+  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-xs);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.product-form .form-error::before {
+  content: '⚠';
+  font-size: var(--font-size-sm);
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-lg);
+  margin-bottom: 0;
+}
+
+.form-row .form-group {
+  margin-bottom: 0;
 }
 
 .form-actions {
@@ -24,6 +96,48 @@
 
 .form-actions button {
   min-width: 150px;
+}
+
+/* Mejoras específicas para modo oscuro */
+[data-theme="dark"] .product-form {
+  background-color: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .product-form .form-label {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .product-form .form-control {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .product-form .form-error {
+  color: #f87171;
+  font-weight: 700;
+}
+
+/* Mejoras específicas para modo claro */
+[data-theme="light"] .product-form {
+  background-color: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+[data-theme="light"] .product-form .form-label {
+  color: #111827;
+}
+
+[data-theme="light"] .product-form .form-control {
+  background: #ffffff;
+  color: #111827;
+  border-color: #d1d5db;
+}
+
+[data-theme="light"] .product-form .form-error {
+  color: #dc2626;
+  font-weight: 600;
 }
 
 /* Responsive */
