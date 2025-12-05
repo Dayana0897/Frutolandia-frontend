@@ -8,14 +8,18 @@ import { useProductStore } from '../store/productStore';
 import { useAuth } from '../context/AuthContext';
 import { SearchBar } from './SearchBar';
 import { ProductCard } from './ProductCard';
+import { ProductForm } from './ProductForm';
+import { Modal } from './Modal';
 import { Toast } from './Toast';
 import './ProductList.css';
 
 export const ProductList = ({ showActions = false }) => {
-  const { products, loading, error, fetchProducts, searchProducts, deleteProduct } =
+  const { products, loading, error, fetchProducts, searchProducts, deleteProduct, updateProduct } =
     useProductStore();
   const { isAdmin } = useAuth();
   const [toast, setToast] = useState(null);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     fetchProducts();
@@ -38,6 +42,30 @@ export const ProductList = ({ showActions = false }) => {
         setToast({ type: 'danger', message: 'Error al eliminar el producto' });
       }
     }
+  };
+
+  const handleEdit = (product) => {
+    console.log('handleEdit llamado con producto:', product);
+    setEditingProduct(product);
+    setShowEditModal(true);
+    console.log('Modal abierto, editingProduct:', product, 'showEditModal:', true);
+  };
+
+  const handleEditSubmit = async (formData) => {
+    try {
+      await updateProduct(editingProduct.id, formData);
+      setToast({ type: 'success', message: 'Producto actualizado correctamente' });
+      setShowEditModal(false);
+      setEditingProduct(null);
+      await fetchProducts();
+    } catch (err) {
+      setToast({ type: 'danger', message: 'Error al actualizar el producto' });
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setShowEditModal(false);
+    setEditingProduct(null);
   };
 
   // Mostrar loader
@@ -81,11 +109,23 @@ export const ProductList = ({ showActions = false }) => {
             <ProductCard
               key={product.id}
               product={product}
-              onEdit={isAdmin ? null : null}
+              onEdit={isAdmin ? handleEdit : null}
               onDelete={isAdmin ? handleDelete : null}
             />
           ))}
         </div>
+      )}
+
+      {/* Modal de edición */}
+      {showEditModal && editingProduct && (
+        <Modal isOpen={showEditModal} onClose={handleCancelEdit} title="Editar Producto">
+          <ProductForm
+            initialData={editingProduct}
+            onSubmit={handleEditSubmit}
+            onCancel={handleCancelEdit}
+            isLoading={loading}
+          />
+        </Modal>
       )}
     </div>
   );

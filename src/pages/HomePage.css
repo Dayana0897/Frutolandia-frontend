@@ -92,6 +92,18 @@
   margin-bottom: var(--spacing-xl);
 }
 
+@media (min-width: 768px) {
+  .featured-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 .featured-card {
   background: var(--bg-card);
   border-radius: var(--border-radius-lg);
