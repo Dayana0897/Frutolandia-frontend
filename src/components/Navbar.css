@@ -3,10 +3,13 @@
 .navbar {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   box-shadow: var(--shadow-md);
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 999;
-  transition: background-color var(--transition-base);
+  transition: all var(--transition-base);
 }
 
 .navbar-container {

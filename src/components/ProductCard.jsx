@@ -5,6 +5,7 @@
 
 import { useNavigate } from 'react-router-dom';
 import { useCartStore } from '../store/cartStore';
+import { useAuth } from '../context/AuthContext';
 import { Toast } from './Toast';
 import { useState } from 'react';
 import './ProductCard.css';
@@ -12,6 +13,7 @@ import './ProductCard.css';
 export const ProductCard = ({ product, onEdit, onDelete }) => {
   const navigate = useNavigate();
   const addItem = useCartStore(state => state.addItem);
+  const { isAdmin } = useAuth();
   const [toast, setToast] = useState(null);
 
   const handleViewDetails = () => {
@@ -70,29 +72,32 @@ export const ProductCard = ({ product, onEdit, onDelete }) => {
 
       {/* Botones de acción */}
       <div className="product-actions">
-        <button
-          className="btn btn-primary btn-sm"
-          onClick={handleViewDetails}
-          title="Ver detalles del producto"
-        >
-          Ver Detalles
-        </button>
-        {onEdit && (
+        {isAdmin && onEdit ? (
+          // Botón de editar para administradores
           <button
             className="btn btn-info btn-sm"
             onClick={() => onEdit(product)}
             title="Editar producto"
           >
-            Editar
+            ✏️ Editar
+          </button>
+        ) : (
+          // Botón de ver detalles para usuarios normales
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={handleViewDetails}
+            title="Ver detalles del producto"
+          >
+            Ver Detalles
           </button>
         )}
-        {onDelete && (
+        {isAdmin && onDelete && (
           <button
             className="btn btn-danger btn-sm"
             onClick={() => onDelete(product.id)}
             title="Eliminar producto"
           >
-            Eliminar
+            🗑️ Eliminar
           </button>
         )}
         <button

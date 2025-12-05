@@ -15,8 +15,8 @@ export const HomePage = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  // Obtener últimos 3 productos como destacados
-  const featuredProducts = products.slice(0, 3);
+  // Obtener 6 productos destacados (variedad de zumos y batidos)
+  const featuredProducts = products.slice(0, 6);
 
   return (
     <div className="home-page">
