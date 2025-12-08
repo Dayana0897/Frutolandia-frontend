@@ -6,10 +6,14 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useProductStore } from '../store/productStore';
+import { useCartStore } from '../store/cartStore';
+import { useAuth } from '../context/AuthContext';
 import './HomePage.css';
 
 export const HomePage = () => {
   const { products, fetchProducts, loading } = useProductStore();
+  const { addItem } = useCartStore();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     fetchProducts();
@@ -17,6 +21,21 @@ export const HomePage = () => {
 
   // Obtener 6 productos destacados (variedad de zumos y batidos)
   const featuredProducts = products.slice(0, 6);
+
+  const handleAddToCart = async (product) => {
+    if (!isAuthenticated) {
+      alert('Por favor inicia sesión para agregar productos al carrito');
+      return;
+    }
+    
+    try {
+      await addItem(product);
+      // Mostrar notificación de éxito (opcional)
+      alert(`${product.name} añadido al carrito`);
+    } catch (error) {
+      alert('Error al añadir al carrito');
+    }
+  };
 
   return (
     <div className="home-page">
@@ -67,12 +86,21 @@ export const HomePage = () => {
                     <h3>{product.name}</h3>
                     <p className="price">€{product.price?.toFixed(2) || '0.00'}</p>
                     <p className="description">{product.description}</p>
-                    <Link
-                      to={`/producto/${product.id}`}
-                      className="btn btn-primary btn-sm"
-                    >
-                      Ver Detalles
-                    </Link>
+                    <div className="featured-card-actions">
+                      <Link
+                        to={`/producto/${product.id}`}
+                        className="btn btn-secondary btn-sm"
+                      >
+                        Ver Detalles
+                      </Link>
+                      <button
+                        onClick={() => handleAddToCart(product)}
+                        className="btn btn-primary btn-sm"
+                        title="Agregar al carrito"
+                      >
+                        🛒 Agregar
+                      </button>
+                    </div>
                   </div>
                 );
               })}

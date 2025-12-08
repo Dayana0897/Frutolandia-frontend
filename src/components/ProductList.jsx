@@ -45,10 +45,8 @@ export const ProductList = ({ showActions = false }) => {
   };
 
   const handleEdit = (product) => {
-    console.log('handleEdit llamado con producto:', product);
     setEditingProduct(product);
     setShowEditModal(true);
-    console.log('Modal abierto, editingProduct:', product, 'showEditModal:', true);
   };
 
   const handleEditSubmit = async (formData) => {
