@@ -18,7 +18,6 @@ export const useCartStore = create((set, get) => ({
       const items = await cartService.getCartItems();
       set({ items, loading: false });
     } catch (error) {
-      console.error('Error al cargar carrito:', error);
       set({ error: error.message, loading: false, items: [] });
     }
   },
@@ -30,7 +29,6 @@ export const useCartStore = create((set, get) => ({
       await cartService.addToCart(product.id, 1);
       await get().loadCart(); // Recargar carrito desde backend
     } catch (error) {
-      console.error('Error al añadir al carrito:', error);
       set({ error: error.message, loading: false });
     }
   },
@@ -42,7 +40,6 @@ export const useCartStore = create((set, get) => ({
       await cartService.removeFromCart(productId);
       await get().loadCart(); // Recargar carrito desde backend
     } catch (error) {
-      console.error('Error al eliminar del carrito:', error);
       set({ error: error.message, loading: false });
     }
   },
@@ -58,7 +55,6 @@ export const useCartStore = create((set, get) => ({
       }
       await get().loadCart(); // Recargar carrito desde backend
     } catch (error) {
-      console.error('Error al actualizar cantidad:', error);
       set({ error: error.message, loading: false });
     }
   },
@@ -86,7 +82,6 @@ export const useCartStore = create((set, get) => ({
       await cartService.clearCart();
       set({ items: [], loading: false });
     } catch (error) {
-      console.error('Error al vaciar carrito:', error);
       set({ error: error.message, loading: false });
     }
   },

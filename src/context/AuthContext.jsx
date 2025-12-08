@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
         // Cargar carrito del usuario
         loadCart();
       } catch (err) {
-        console.error('Error al cargar usuario:', err);
         localStorage.removeItem('user');
         localStorage.removeItem('token');
       }

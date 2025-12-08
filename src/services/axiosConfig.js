@@ -41,12 +41,6 @@ axiosInstance.interceptors.response.use(
           window.location.href = '/login';
         }
       }
-      console.error('Error del servidor:', error.response.status, error.response.data);
-    } else if (error.request) {
-      // Error de petición (sin respuesta)
-      console.error('Error de conexión:', error.request);
-    } else {
-      console.error('Error en la petición:', error.message);
     }
     return Promise.reject(error);
   }
