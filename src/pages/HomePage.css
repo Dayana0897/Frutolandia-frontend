@@ -145,6 +145,14 @@
   font-size: var(--font-size-sm);
 }
 
+/* Contenedor de acciones de la tarjeta */
+.featured-card-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .featured-card .btn {
   background: var(--color-primary);
   color: var(--color-white);
@@ -156,6 +164,21 @@
   text-decoration: none;
   transition: all var(--transition-base);
   display: inline-block;
+  cursor: pointer;
+  flex: 1;
+  min-width: 120px;
+}
+
+.featured-card .btn-secondary {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.featured-card .btn-secondary:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
 }
 
 .featured-card .btn:hover {

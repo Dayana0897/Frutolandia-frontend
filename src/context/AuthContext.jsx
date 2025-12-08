@@ -1,57 +1,71 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import axiosInstance from '../services/axiosConfig';
+import { useCartStore } from '../store/cartStore';
 
 /**
  * Contexto de Autenticación
- * Maneja login, logout y estado del usuario
+ * Maneja login, logout y estado del usuario con JWT
  */
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const loadCart = useCartStore((state) => state.loadCart);
 
-  // Cargar usuario desde localStorage al montar
+  // Cargar usuario y token desde localStorage al montar
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    if (storedUser) {
+    const storedToken = localStorage.getItem('token');
+    
+    if (storedUser && storedToken) {
       try {
         setUser(JSON.parse(storedUser));
+        setToken(storedToken);
+        // Configurar token en axios
+        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+        // Cargar carrito del usuario
+        loadCart();
       } catch (err) {
         console.error('Error al cargar usuario:', err);
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
       }
     }
     setLoading(false);
-  }, []);
+  }, [loadCart]);
 
   // Login
   const login = async (email, password) => {
     setError(null);
     setLoading(true);
     try {
-      // Obtener usuario por email del backend
-      const response = await fetch(`http://localhost:8080/api/users/email/${encodeURIComponent(email)}`);
-      
-      if (!response.ok) {
-        throw new Error('Usuario no encontrado');
-      }
+      const response = await axiosInstance.post('/auth/login', {
+        email,
+        password
+      });
 
-      const foundUser = await response.json();
+      const { token: jwtToken, ...userData } = response.data;
       
-      // En producción, verificarías la contraseña de forma segura con hash
-      // Por ahora solo verificamos que la contraseña coincida
-      if (foundUser.password !== password) {
-        throw new Error('Contraseña incorrecta');
-      }
+      // Guardar usuario y token
+      setUser(userData);
+      setToken(jwtToken);
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', jwtToken);
+      
+      // Configurar token en axios para futuras peticiones
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
 
-      setUser(foundUser);
-      localStorage.setItem('user', JSON.stringify(foundUser));
-      return foundUser;
+      // Cargar carrito del usuario
+      await loadCart();
+
+      return userData;
     } catch (err) {
-      const errorMsg = err.message || 'Error en el login';
+      const errorMsg = err.response?.data?.message || 'Error en el login';
       setError(errorMsg);
-      throw err;
+      throw new Error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -62,42 +76,31 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     setLoading(true);
     try {
-      // Verificar que el email no exista
-      const checkResponse = await fetch('http://localhost:8080/api/users');
-      const existingUsers = await checkResponse.json();
-      
-      if (existingUsers.some(u => u.email === email)) {
-        throw new Error('El email ya está registrado');
-      }
-
-      // Crear nuevo usuario
-      const newUser = {
+      const response = await axiosInstance.post('/auth/register', {
         name,
         email,
-        password, // En producción, esto se hashearia en el backend
-        role: 'USER', // Por defecto, nuevo usuario
-      };
-
-      const response = await fetch('http://localhost:8080/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newUser),
+        password
       });
 
-      if (!response.ok) {
-        throw new Error('Error al crear usuario');
-      }
+      const { token: jwtToken, ...userData } = response.data;
+      
+      // Guardar usuario y token
+      setUser(userData);
+      setToken(jwtToken);
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', jwtToken);
+      
+      // Configurar token en axios para futuras peticiones
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
 
-      const createdUser = await response.json();
-      setUser(createdUser);
-      localStorage.setItem('user', JSON.stringify(createdUser));
-      return createdUser;
+      // Cargar carrito del usuario (estará vacío para nuevo usuario)
+      await loadCart();
+
+      return userData;
     } catch (err) {
-      const errorMsg = err.message || 'Error en el registro';
+      const errorMsg = err.response?.data?.message || 'Error en el registro';
       setError(errorMsg);
-      throw err;
+      throw new Error(errorMsg);
     } finally {
       setLoading(false);
     }
@@ -106,7 +109,13 @@ export const AuthProvider = ({ children }) => {
   // Logout
   const logout = () => {
     setUser(null);
+    setToken(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    // Remover token de axios
+    delete axiosInstance.defaults.headers.common['Authorization'];
+    // Limpiar carrito del store (local)
+    useCartStore.setState({ items: [] });
     setError(null);
   };
 
@@ -114,6 +123,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{
         user,
+        token,
         loading,
         error,
         login,
