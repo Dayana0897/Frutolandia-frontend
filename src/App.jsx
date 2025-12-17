@@ -12,6 +12,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import { HomePage } from './pages/HomePage';
 import { ProductsPage } from './pages/ProductsPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
+import { ProfilePage } from './pages/ProfilePage';
 import { UsersPage } from './pages/UsersPage';
 import { AdminPage } from './pages/AdminPage';
 import { NotFoundPage } from './pages/NotFoundPage';
@@ -39,6 +40,16 @@ function AppContent() {
             <Route path="/" element={<HomePage />} />
             <Route path="/productos" element={<ProductsPage />} />
             <Route path="/producto/:id" element={<ProductDetailPage />} />
+            
+            {/* Ruta de perfil - Requiere autenticación */}
+            <Route
+              path="/perfil"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
             
             {/* Rutas protegidas - Requieren autenticación y rol ADMIN */}
             <Route

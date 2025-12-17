@@ -8,12 +8,14 @@ import { useEffect } from 'react';
 import { useProductStore } from '../store/productStore';
 import { useCartStore } from '../store/cartStore';
 import { useAuth } from '../context/AuthContext';
+import { useFavoriteStore } from '../store/favoriteStore';
 import './HomePage.css';
 
 export const HomePage = () => {
   const { products, fetchProducts, loading } = useProductStore();
   const { addItem } = useCartStore();
   const { isAuthenticated } = useAuth();
+  const { favorites, addFavorite, removeFavorite, isFavorite } = useFavoriteStore();
 
   useEffect(() => {
     fetchProducts();
@@ -34,6 +36,25 @@ export const HomePage = () => {
       alert(`${product.name} añadido al carrito`);
     } catch (error) {
       alert('Error al añadir al carrito');
+    }
+  };
+
+  const handleToggleFavorite = async (product) => {
+    if (!isAuthenticated) {
+      alert('Por favor inicia sesión para agregar favoritos');
+      return;
+    }
+    
+    try {
+      if (isFavorite(product.id)) {
+        await removeFavorite(product.id);
+        alert(`${product.name} eliminado de favoritos`);
+      } else {
+        await addFavorite(product.id);
+        alert(`${product.name} agregado a favoritos`);
+      }
+    } catch (error) {
+      alert('Error al actualizar favoritos');
     }
   };
 
@@ -82,6 +103,15 @@ export const HomePage = () => {
                 
                 return (
                   <div key={product.id} className="featured-card">
+                    {isAuthenticated && (
+                      <button
+                        className={`favorite-btn ${isFavorite(product.id) ? 'active' : ''}`}
+                        onClick={() => handleToggleFavorite(product)}
+                        title={isFavorite(product.id) ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+                      >
+                        <i className="fas fa-heart"></i>
+                      </button>
+                    )}
                     <div className="featured-image">{productIcon}</div>
                     <h3>{product.name}</h3>
                     <p className="price">€{product.price?.toFixed(2) || '0.00'}</p>

@@ -230,6 +230,27 @@
   letter-spacing: 0.5px;
 }
 
+.profile-link {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: left;
+  text-decoration: none;
+  border-top: 1px solid var(--border-color);
+}
+
+.profile-link:hover {
+  background: rgba(0, 123, 255, 0.1);
+  color: var(--color-primary);
+}
+
 .logout-btn {
   width: 100%;
   padding: var(--spacing-md) var(--spacing-lg);
@@ -241,6 +262,7 @@
   cursor: pointer;
   transition: all var(--transition-base);
   text-align: left;
+  border-top: 1px solid var(--border-color);
 }
 
 .logout-btn:hover {

@@ -104,6 +104,9 @@ export const Navbar = () => {
                     <p className="user-email">{user.email}</p>
                     <p className="user-role">{user.role === 'ADMIN' ? '👑 Admin' : '👤 Usuario'}</p>
                   </div>
+                  <Link to="/perfil" className="profile-link" onClick={() => setShowUserMenu(false)}>
+                    👤 Mi Perfil
+                  </Link>
                   <button onClick={handleLogout} className="logout-btn">
                     Cerrar Sesión
                   </button>

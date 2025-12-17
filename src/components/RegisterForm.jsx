@@ -8,7 +8,8 @@ import './AuthForms.css';
  * Puede usarse en página completa o dentro de modal
  */
 const RegisterForm = ({ onSuccess, inModal = false }) => {
-  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -21,10 +22,16 @@ const RegisterForm = ({ onSuccess, inModal = false }) => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!name.trim()) {
-      newErrors.name = 'El nombre es requerido';
-    } else if (name.trim().length < 3) {
-      newErrors.name = 'El nombre debe tener al menos 3 caracteres';
+    if (!firstName.trim()) {
+      newErrors.firstName = 'El nombre es requerido';
+    } else if (firstName.trim().length < 2) {
+      newErrors.firstName = 'El nombre debe tener al menos 2 caracteres';
+    }
+    
+    if (!lastName.trim()) {
+      newErrors.lastName = 'Los apellidos son requeridos';
+    } else if (lastName.trim().length < 2) {
+      newErrors.lastName = 'Los apellidos deben tener al menos 2 caracteres';
     }
     
     if (!email) {
@@ -55,7 +62,8 @@ const RegisterForm = ({ onSuccess, inModal = false }) => {
     if (!validateForm()) return;
 
     try {
-      const success = await register(name.trim(), email, password);
+      const fullName = `${firstName.trim()} ${lastName.trim()}`;
+      const success = await register(fullName, email, password);
       if (success) {
         if (onSuccess) {
           onSuccess();
@@ -75,17 +83,31 @@ const RegisterForm = ({ onSuccess, inModal = false }) => {
       )}
 
       <div className="form-group">
-        <label htmlFor="name">Nombre Completo</label>
+        <label htmlFor="firstName">Nombre</label>
         <input
           type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          id="firstName"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
           placeholder="Tu nombre"
-          className={errors.name ? 'input-error' : ''}
+          className={errors.firstName ? 'input-error' : ''}
           disabled={loading}
         />
-        {errors.name && <span className="field-error">{errors.name}</span>}
+        {errors.firstName && <span className="field-error">{errors.firstName}</span>}
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="lastName">Apellidos</label>
+        <input
+          type="text"
+          id="lastName"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          placeholder="Tus apellidos"
+          className={errors.lastName ? 'input-error' : ''}
+          disabled={loading}
+        />
+        {errors.lastName && <span className="field-error">{errors.lastName}</span>}
       </div>
 
       <div className="form-group">
