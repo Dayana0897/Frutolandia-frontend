@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axiosInstance from '../services/axiosConfig';
 import { useCartStore } from '../store/cartStore';
+import { useFavoriteStore } from '../store/favoriteStore';
 
 /**
  * Contexto de Autenticación
@@ -14,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const loadCart = useCartStore((state) => state.loadCart);
+  const loadFavorites = useFavoriteStore((state) => state.loadFavorites);
 
   // Cargar usuario y token desde localStorage al montar
   useEffect(() => {
@@ -26,15 +28,16 @@ export const AuthProvider = ({ children }) => {
         setToken(storedToken);
         // Configurar token en axios
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-        // Cargar carrito del usuario
+        // Cargar carrito y favoritos del usuario
         loadCart();
+        loadFavorites();
       } catch (err) {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
       }
     }
     setLoading(false);
-  }, [loadCart]);
+  }, [loadCart, loadFavorites]);
 
   // Login
   const login = async (email, password) => {
@@ -57,8 +60,9 @@ export const AuthProvider = ({ children }) => {
       // Configurar token en axios para futuras peticiones
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
 
-      // Cargar carrito del usuario
+      // Cargar carrito y favoritos del usuario
       await loadCart();
+      await loadFavorites();
 
       return userData;
     } catch (err) {
@@ -92,8 +96,9 @@ export const AuthProvider = ({ children }) => {
       // Configurar token en axios para futuras peticiones
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
 
-      // Cargar carrito del usuario (estará vacío para nuevo usuario)
+      // Cargar carrito y favoritos del usuario
       await loadCart();
+      await loadFavorites();
 
       return userData;
     } catch (err) {
@@ -113,8 +118,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
     // Remover token de axios
     delete axiosInstance.defaults.headers.common['Authorization'];
-    // Limpiar carrito del store (local)
+    // Limpiar carrito y favoritos
     useCartStore.setState({ items: [] });
+    useFavoriteStore.getState().clearFavorites();
     setError(null);
   };
 

@@ -7,6 +7,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useProductStore } from '../store/productStore';
 import { useCartStore } from '../store/cartStore';
+import { useAuth } from '../context/AuthContext';
+import { useFavoriteStore } from '../store/favoriteStore';
 import { Toast } from '../components/Toast';
 import './ProductDetailPage.css';
 
@@ -15,6 +17,8 @@ export const ProductDetailPage = () => {
   const navigate = useNavigate();
   const { selectedProduct, loading, error, fetchProductById } = useProductStore();
   const addItem = useCartStore(state => state.addItem);
+  const { isAuthenticated } = useAuth();
+  const { addFavorite, removeFavorite, isFavorite } = useFavoriteStore();
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
@@ -27,6 +31,28 @@ export const ProductDetailPage = () => {
     addItem(selectedProduct);
     setToast({ type: 'success', message: `${selectedProduct.name} agregado al carrito` });
     setTimeout(() => setToast(null), 2000);
+  };
+
+  const handleToggleFavorite = async () => {
+    if (!isAuthenticated) {
+      setToast({ type: 'error', message: 'Por favor inicia sesión para agregar favoritos' });
+      setTimeout(() => setToast(null), 2000);
+      return;
+    }
+    
+    try {
+      if (isFavorite(selectedProduct.id)) {
+        await removeFavorite(selectedProduct.id);
+        setToast({ type: 'success', message: `${selectedProduct.name} eliminado de favoritos` });
+      } else {
+        await addFavorite(selectedProduct.id);
+        setToast({ type: 'success', message: `${selectedProduct.name} agregado a favoritos` });
+      }
+      setTimeout(() => setToast(null), 2000);
+    } catch (error) {
+      setToast({ type: 'error', message: 'Error al actualizar favoritos' });
+      setTimeout(() => setToast(null), 2000);
+    }
   };
 
   if (loading) {
@@ -132,9 +158,15 @@ export const ProductDetailPage = () => {
             >
               🛒 Agregar al Carrito
             </button>
-            <button className="btn btn-warning btn-lg">
-              ❤️ Agregar a Favoritos
-            </button>
+            {isAuthenticated && (
+              <button 
+                className={`btn btn-lg ${isFavorite(selectedProduct.id) ? 'btn-danger' : 'btn-outline-danger'}`}
+                onClick={handleToggleFavorite}
+              >
+                <i className={`fas fa-heart`}></i>
+                {isFavorite(selectedProduct.id) ? ' En Favoritos' : ' Agregar a Favoritos'}
+              </button>
+            )}
           </div>
 
           {/* Envío */}
