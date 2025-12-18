@@ -9,6 +9,7 @@ import { AuthProvider } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { ScrollToTop } from './components/ScrollToTop';
 import { HomePage } from './pages/HomePage';
 import { ProductsPage } from './pages/ProductsPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
@@ -29,6 +30,7 @@ function AppContent() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="app">
         {/* Navbar */}
         <Navbar />

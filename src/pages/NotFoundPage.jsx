@@ -20,7 +20,7 @@ export const NotFoundPage = () => {
           </div>
 
           <p className="error-description">
-            Parece que te has perdido en Frutolandia. No te preocupes, vuelve al inicio y continúa comprando frutas frescas.
+            Parece que te has perdido en Frutolandia. No te preocupes, vuelve al inicio e intenta continuar comprando tus zumos y batidos.
           </p>
 
           <div className="action-links">
