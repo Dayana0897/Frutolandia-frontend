@@ -5,8 +5,8 @@ Frontend de e-commerce de zumos y batidos def ruta fresca construido con Vite, R
 ## 🚀 Despliegue Rápido
 
 ### Requisitos
-- Node.js 16+
-- npm o yarn
+- Node.js 16+ (recomendado 18 o superior)
+- npm 8+ o yarn 1.22+
 
 ### Comandos de Despliegue
 
@@ -14,7 +14,11 @@ Frontend de e-commerce de zumos y batidos def ruta fresca construido con Vite, R
 # 1. Instalar dependencias
 npm install
 
-# 2. Iniciar servidor de desarrollo
+# 2. (Opcional) Configurar variables de entorno
+cp .env.example .env
+# Editar .env si necesitas cambiar la URL del backend
+
+# 3. Iniciar servidor de desarrollo
 npm run dev
 
 # Otros comandos útiles
@@ -25,6 +29,11 @@ npm run lint     # Ejecutar linter
 
 **Acceso**: http://localhost:5173  
 **Backend requerido**: http://localhost:8080 (debe estar corriendo)
+
+### Variables de Entorno
+
+Crea un archivo `.env` basado en `.env.example`:
+- `VITE_API_URL`: URL del backend (por defecto: `http://localhost:8080/api`)
 
 ## 🚀 Características
 
